@@ -25,6 +25,7 @@ public class Monster extends AbstractUnit {
 
     @Override
     public void getTurn() {
+        super.getTurn();
         sleepTimer = 1.0f;
     }
 
@@ -33,7 +34,20 @@ public class Monster extends AbstractUnit {
             sleepTimer -= dt;
             return false;
         }
-        meleeAttack(target);
+
+        //randomly decide what action to take
+        int decision = (int) (Math.random() * 3);
+        switch (decision) {
+            case 0:
+                meleeAttack(target);
+                break;
+            case 1:
+                defend();
+                break;
+            case 2:
+                heal();
+                break;
+        }
         return true;
     }
 }

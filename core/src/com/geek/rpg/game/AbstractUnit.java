@@ -13,6 +13,7 @@ public abstract class AbstractUnit {
     protected String name;
     protected int hp;
     protected int maxHp;
+    protected boolean defenceBonus = false;
 
     protected int level;
 
@@ -96,7 +97,13 @@ public abstract class AbstractUnit {
         }
     }
 
-    public abstract void getTurn();
+    public void getTurn() {
+        if (defenceBonus) {
+            defence -= 5;
+            game.addMessage("-5 defence", getPosition().x + 45, getPosition().y + 75);
+            defenceBonus = false;
+        }
+    }
 
     public void meleeAttack(AbstractUnit enemy) {
         int dmg = this.strength - enemy.defence;
@@ -114,5 +121,17 @@ public abstract class AbstractUnit {
         } else {
             game.addMessage("MISS", enemy.getPosition().x + 45, enemy.getPosition().y + 75);
         }
+    }
+
+    public void heal() {
+        int plus = (int)(maxHp * .15);
+        hp = ((hp + plus) > maxHp) ? maxHp : hp + plus;
+        game.addMessage("+" + plus + " hp", getPosition().x + 45, getPosition().y + 75);
+    }
+
+    public void defend() {
+        defenceBonus = true;
+        defence += 5;
+        game.addMessage("+5 defence", getPosition().x + 45, getPosition().y + 75);
     }
 }

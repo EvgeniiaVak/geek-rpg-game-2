@@ -44,6 +44,8 @@ public class RpgGame extends ApplicationAdapter {
         selectedUnit = 0;
         btnGUI = new ArrayList<Button>();
         btnGUI.add(new Button("Attack", new Texture("btn.png"), new Rectangle(200, 20, 80, 80)));
+        btnGUI.add(new Button("Defend", new Texture("btn.png"), new Rectangle(200, 120, 80, 80)));
+        btnGUI.add(new Button("Heal", new Texture("btn.png"), new Rectangle(200, 220, 80, 80)));
     }
 
     public void addMessage(String text, float x, float y) {
@@ -106,14 +108,23 @@ public class RpgGame extends ApplicationAdapter {
                             nextTurn();
                         }
                     }
+                    if (action.equals("Defend")) {
+                        player.defend();
+                        nextTurn();
+                    }
+                    if (action.equals("Heal")) {
+                        player.heal();
+                        nextTurn();
+                    }
                 }
             }
-        }
-        if (!isHeroTurn()) {
+        } else {
             if (((Monster) units.get(currentUnit)).ai(dt)) {
                 nextTurn();
             }
         }
+
+
         for (int i = 0; i < msgs.length; i++) {
             if (msgs[i].isActive()) {
                 msgs[i].update(dt);

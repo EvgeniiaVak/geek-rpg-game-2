@@ -18,8 +18,4 @@ public class Hero extends AbstractUnit {
         this.defence = 5;
         this.flip = false;
     }
-
-    @Override
-    public void getTurn() {
-    }
 }
